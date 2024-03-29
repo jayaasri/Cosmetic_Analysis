@@ -127,7 +127,7 @@ def get_search_info():
 
     return jsonify({'result': result})
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False,host=0.0.0.0)
     
     
     
