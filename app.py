@@ -46,9 +46,9 @@ def disable_ssl_verification():
 
 disable_ssl_verification()
 
-@app.route('/home.html')
+@app.route('/index.html')
 def cosmetic_analyze():
-    return render_template('home.html')
+    return render_template('index.html')
 
 @app.route('/login.html')
 def login():
