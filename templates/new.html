@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Google Search</title>
+    <script>
+        function getSearchResults() {
+            const query = document.getElementById('searchQuery').value;
+            if (!query) {
+                alert("Please provide a search query");
+                return;
+            }
+
+            fetch(`http://127.0.0.1:5000/search?query=${query}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('results').innerText = data;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</head>
+<body>
+    <h1>Google Search</h1>
+    <input type="text" id="searchQuery" placeholder="Enter your search query">
+    <button onclick="getSearchResults()">Search</button>
+    <div id="results"></div>
+</body>
+</html>

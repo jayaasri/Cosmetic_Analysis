@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmetic Analyzer - Home</title>
+    <style>
+        /* Resetting default margin and padding */
+        body, h1, h2, h3, p, ul {
+            margin: 0;
+            padding: 0;
+            zoom:150%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header styles */
+        header {
+            background-color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header img {
+            max-width: 100px; /* Adjust the width as needed */
+            height: auto;
+        }
+
+        header h1 {
+            font-size: 36px;
+            color: #333;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Main content styles */
+        main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: calc(100vh - 160px); /* Adjust for header and footer height */
+            background-image: url('/static/images/images.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: lighten; /* Adjust the blend mode for the light overlay */
+            background-color: rgba(255, 255, 255, 0.7); /* Light overlay color */
+        }
+
+        main h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        main p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        /* Login and Signup buttons */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .button-container button {
+            padding: 12px 24px;
+            font-size: 20px;
+            margin: 0 10px;
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+            background-color: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .button-container button:hover {
+            background-color: #fff;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <header>
+
+        <h1>Welcome to Cosmetic Analyzer</h1>
+    </header>
+
+    <main>
+        <h2>Discover the secrets of your cosmetics</h2>
+        <h3>Upload an image to analyze ingredients, safety, and more</h3>
+
+        <!-- Login and Signup buttons -->
+        <div class="button-container">
+            <button onclick="location.href='login.html'">Login</button>
+<button onclick="location.href='signup.html'">Sign Up</button>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Cosmetic Analyzer</p>
+    </footer>
+</body>
+</html>

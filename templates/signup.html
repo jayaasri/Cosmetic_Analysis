@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        /* Your CSS styles here */
+      body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-blend-mode: lighten;
+            background-image: url('/static/images/images.jpeg');
+            background-color: rgba(255, 255, 255, 0.7);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            zoom:150%
+        }
+        
+        form {
+            
+            background-color: rgba(255, 255, 255, 0.9); /* Adjust the background color opacity */
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"], input[type="password"], input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <form action="/signup" method="POST" onsubmit="return redirectToAnotherPage()">
+        <h1>Sign Up for Cosmetic Analyzer</h1>
+        <input type="text" placeholder="Full Name" name="fullname" required><br><br>
+        <input type="text" placeholder="Username" name="username" required><br><br>
+        <input type="email" placeholder="Email" name="email" required><br><br>
+        <input type="password" placeholder="Password" name="password" required><br><br>
+        <!-- Submit button -->
+        <input type="submit" value="Sign Up">
+    </form>
+    
+     <script>
+        function redirectToAnotherPage() {
+            // Redirect to CosmeticAnalyze.html after form submission
+            window.location.href = "http://127.0.0.1:5000"; // Replace with your desired URL
+            return false; // Prevent the form from submitting in case of direct form submission
+        }
+    </script>
+    
+    
+</body>
+</html>

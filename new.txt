@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmetic Analyzer</title>
+    <style>
+        /* Resetting default margin and padding */
+        body, h1, h2, h3, p, ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: right;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            zoom: 150%; /* Adjust the zoom level for better visibility */
+        }
+
+        /* Navbar styles */
+        .navbar {
+            overflow: hidden;
+            background-color: #333;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            display: inline-block;
+            color: #f2f2f2;
+            text-align: right;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        /* Button styles */
+        .btn {
+            border: 2px solid #4CAF50;
+            color: #4CAF50;
+            background-color: #fff;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+
+        /* Upload button wrapper */
+        #upload-btn-wrapper {
+            margin-top: 70px;
+            text-align: center;
+        }
+
+        #upload-btn-wrapper input[type=file] {
+            font-size: 20px;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        #image-preview {
+            margin-top: 20px;
+            display: none;
+        }
+
+        #image-preview img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Results and toxic ingredients styles */
+        #results, #matched-data {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #results h3, #matched-data h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        #matched-data p {
+            color: #FF0000; /* Changing color to red for emphasis */
+            font-weight: bold;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation bar -->
+    <div class="navbar">
+        <a href="home.html">Home</a>
+        <a href="login.html">Login</a>
+        <a href="signup.html">Sign Up</a>
+    </div>
+
+    <div id="upload-btn-wrapper">
+        <header>
+            <h1>Cosmetic Analyzer</h1>
+            <hr>
+        </header>
+    </form>
+    
+        <form id="image-form" method="POST" action="/upload" enctype="multipart/form-data">
+            {{ form.csrf_token }}
+            <!-- Image Upload Section -->
+            <label class="btn" for="image">Upload an Image</label>
+            <input type="file" name="image" id="image" accept="image/*">
+            <input class="btn" type="submit" value="Upload">
+            <div id="image-preview">
+                <img id="uploaded-image" src="#" alt="Uploaded Image">
+            </div>
+            <!-- Analysis Results Section -->
+            <button class="btn" type="button" id="analyze-button">Analyze Image</button>
+            <div id="results">
+                <h3>Extracted Text:</h3>
+                <ul>
+                    {% if results %}
+                        {% for result in results %}
+                            <li>{{ result }}</li>
+                        {% endfor %}
+                    {% else %}
+                        <li>No results found.</li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div id="matched-data">
+                <h3>Toxic Ingredients:</h3>
+                {% if matched_data %}
+                    {{ matched_data|safe }}
+                {% else %}
+                    <p>No toxic ingredients found.</p>
+                {% endif %}
+            </div>
+        </form>
+        <!-- Product Search Form -->
+    <h2>Product Search</h2>
+    <label for="brandName">Brand Name:</label>
+    <input type="text" id="brandName" name="brandName">
+    <br>
+    <label for="productName">Product Name:</label>
+    <input type="text" id="productName" name="productName">
+    <br>
+    <br>
+    <button class="btn" onclick="searchProduct()">Search</button>
+    <br>
+    </div>
+    
+    
+    
+    
+       <script>
+            
+    const uploadInput = document.getElementById('image');
+    const imagePreview = document.getElementById('uploaded-image');
+    const imagePreviewDiv = document.getElementById('image-preview');
+    const resultsDiv = document.getElementById('results');
+    const matchedDataDiv = document.getElementById('matched-data');
+    uploadInput.addEventListener('change', function() {
+        const file = this.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                imagePreviewDiv.style.display = 'block';
+            };
+
+            reader.readAsDataURL(file);
+        }
+    });
+    
+    
+// Add an event listener to the "Analyze Image" button
+const analyzeButton = document.getElementById('analyze-button');
+analyzeButton.addEventListener('click', function() {
+    // Make a GET request to retrieve the text from the saved image on the server
+    
+    fetch('/get_image_and_text', {
+        method: 'GET',
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Call the displayResults function with the actual results from the server
+        
+        displayResults(data.results);
+        displayMatchedData(data.matched_data,data.results);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
+   
+   function displayResults(results) {
+    resultsDiv.innerHTML = '<h3>Extracted Text:</h3><ul>';
+    
+    if (results.length > 0) {
+        results.forEach((result, index) => {
+            resultsDiv.innerHTML += `${result}`;
+        });
+    } else {
+        resultsDiv.innerHTML += '<li>No results found.</li>';
+    }
+
+    resultsDiv.innerHTML += '</ul>';
+}
+
+
+
+
+function displayMatchedData(matchedData,results) {
+
+    matchedDataDiv.innerHTML = '<h3>Toxic Ingredients:</h3>';
+    const columnsToDisplay = [
+        'Dioxane', 'Acrylates', 'Benzophenone', 'Carbon black', 'Carcinogens', 'CoalTar',
+        'Ethanolamaine', 'Homosalate', 'Hydroquinone', 'Lead', 'Lead Acetate', 'Methylisothiazolinone',
+        'Methylchloroisothiazolinone', 'Mica', 'Isopropyl acetone', 'methyl ethyl ketone', 'Retinol',
+        'Parabens', 'arsenic', 'zinc', 'chromium'
+    ];
+    console.log(results);
+    if (matchedData.length > 0) {
+        const matchedColumns = new Set(); 
+        matchedData.forEach(data => {
+            columnsToDisplay.forEach(column => {
+                if (data[column] === 1 && !matchedColumns.has(column)) {
+                    
+                    results.forEach(result => {
+                    if(result.includes(column)){
+                    matchedColumns.add(column); // Add the column to the Set
+                    matchedDataDiv.innerHTML += `<p>${column} Present<p>`;
+                    }
+                    
+                });
+                }
+            });
+        });
+    } else {
+        matchedDataDiv.innerHTML += '<p>No matching ingredients found.</p>';
+    }
+}
+
+function searchProduct() {
+            // Get values from input fields
+            var brandName = document.getElementById('brandName').value;
+            var productName = document.getElementById('productName').value;
+
+            if (brandName && productName) {
+                // Replace spaces with '+'
+                brandName = brandName.replace(' ', '+');
+                productName = productName.replace(' ', '+');
+
+                // Create the Google search link
+                var link = `https://www.google.com/search?&q=${brandName}+${productName}+is+best+suitable+for+which+skin+type`;
+
+                // Open the link in a new tab
+                window.open(link, '_blank');
+            } else {
+                console.error('Brand or product name not available');
+            }
+        }
+
+
+
+
+        
+        
+        
+    </script>
+    
+</body>
+</html>
+
+
+
