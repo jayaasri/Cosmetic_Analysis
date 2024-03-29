@@ -19,3 +19,6 @@ Empower users with informed skincare choices through accurate toxicity assessmen
 ## Future Work
 Continuously update databases, refine algorithms, and collaborate with industry experts for further enhancement.
 
+**Get in Touch:** Use the contact form to connect with me for collaborations or inquiries.
+https://forms.gle/vnctb6Hu56GkV2Tz7
+
