@@ -4,6 +4,9 @@ appnope==0.1.4
 asttokens==2.4.1
 attrs==23.2.0
 backcall==0.2.0
+easyocr
+Flask-WTF==0.15.1
+google==3.0.0
 beautifulsoup4==4.12.3
 bleach==6.1.0
 altair==5.2.0
